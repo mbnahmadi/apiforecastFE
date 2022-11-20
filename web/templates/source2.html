@@ -1,0 +1,84 @@
+<!DOCTYPE HTML> 
+<html>
+	<head></head>
+	<body>
+			<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+			<canvas id="myChart" width=300px height=100px ></canvas>
+			<script>
+				let file_path = "D:\apifront\time.csv";
+				d3.csv(file_path).then(function(loadedData){
+					let data = [];
+					let lable = [];
+					for (let i=0 ; i<loadedData.length ; i++){
+						let time = loadedData[i];
+						lables.push(time);
+					}
+
+				});
+				const ctx = document.getElementById('myChart').getContext('2d');
+				const myChart = new Chart(ctx, {
+					type: 'line',
+					data: {
+						labels: lables ,
+						datasets: [{
+							label: 'V5',
+							yAxisID : 'V5',
+							data: [{% for data in v5 %} {{data}}, {% endfor %}],
+							borderColor : 'rgb(255,150,0)'
+						},
+						{
+							label: 'V6',
+							yAxisID : 'V6',
+							data: [{% for data in v6 %} {{data}}, {% endfor %}],
+							borderColor : 'rgb(0,150,255)'
+
+						},
+						{
+							label: 'V7',
+							yAxisID : 'V7',
+							data: [{% for data in v7 %} {{data}}, {% endfor %}],
+							borderColor : 'rgb(150,0,255)'
+						}
+						]
+					},
+					options: {
+						//responsive : false,
+						animation : true,
+						scales: {
+							yAxes: [
+								{
+									id : 'V5',
+									display : true,
+									//position : 'Left',
+									scaleLable : {
+										display : true,
+										lablestring : 'V5'
+									}
+								},
+								{
+									id : 'V6',
+									position : 'right',
+									display : true,
+									scaleLable : {
+										display : true,
+										lablestring : 'V6'
+									}
+								},
+								{
+									id : 'V7',
+									display : true,
+									position : 'right',
+									scaleLable : {
+										display : true,
+										lablestring : 'V7'
+									}
+								},
+								]
+					  		 }
+				   			}
+			  			});
+			</script>
+			{% comment %} <p>{% for data in v5 %} {{data}} {% endfor %}</p> {% endcomment %}
+
+		</body>
+</html>

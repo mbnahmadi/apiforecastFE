@@ -1,0 +1,202 @@
+<!DOCTYPE HTML>
+<html>
+	
+	<script src=
+"https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+	</script>
+</head>
+
+<body style = "text-align:center;">
+
+
+	
+	<button onclick = "GFG_FUN()">
+		click here
+	</button>
+	
+	<br><br>
+	
+	<table id="table" align = "center" border="1px"></table>
+	
+	<script>
+		var el_up = document.getElementById("GFG_UP");
+		
+		var list = [{'a': '0.0000000000', 'b': '34.1000000000', 'c': '3.3000000000', 'd': '6.5000000000', 'e': '314.0000000000', 'f': '-1.231550', 'g': '1.173120'}, 
+        {'a': '3.0000000000', 'b': '33.8000000000', 'c': '3.6000000000', 'd': '7.1000000000', 'e': '333.0000000000', 'f': '-0.767740', 'g': '1.517730'}, 
+        {'a': '6.0000000000', 'b': '32.8000000000', 'c': '3.5000000000', 'd': '6.9000000000', 'e': '317.0000000000', 'f': '-1.162920', 'g': '1.241190'}, 
+        {'a': '9.0000000000', 'b': '32.5000000000', 'c': '4.3000000000', 'd': '8.4000000000', 'e': '316.0000000000', 'f': '-1.183840', 'g': '1.221260'}, 
+        {'a': '12.0000000000', 'b': '32.5000000000', 'c': '4.2000000000', 'd': '8.2000000000', 'e': '321.0000000000', 'f': '-1.075900', 'g': '1.317340'}, 
+        {'a': '15.0000000000', 'b': '32.0000000000', 'c': '3.9000000000', 'd': '7.6000000000', 'e': '330.0000000000', 'f': '-0.848870', 'g': '1.473890'}];
+		
+		el_up.innerHTML = "Click on the button to create the "
+				+ "table from the JSON data.<br><br>"
+				+ JSON.stringify(list[0]) + "<br>"
+				+ JSON.stringify(list[1]) + "<br>"
+                + JSON.stringify(list[2]) + "<br>"
+                + JSON.stringify(list[3]) + "<br>"
+                + JSON.stringify(list[4]) + "<br>"
+                + JSON.stringify(list[5]) + "<br>"
+				+ JSON.stringify(list[6]);
+		
+		function GFG_FUN() {
+			var cols = [];
+			
+			for (var i = 0; i < list.length; i++) {
+				for (var k in list[i]) {
+					if (cols.indexOf(k) === -1) {
+						
+						// Push all keys to the array
+						cols.push(k);
+					}
+				}
+			}
+			
+			// Create a table element
+			var table = document.createElement("table");
+			
+			// Create table row tr element of a table
+			var tr = table.insertRow(-1);
+			
+			for (var i = 0; i < cols.length; i++) {
+				
+				// Create the table header th element
+				var theader = document.createElement("th");
+				theader.innerHTML = cols[i];
+				
+				// Append columnName to the table row
+				tr.appendChild(theader);
+			}
+			
+			// Adding the data to the table
+			for (var i = 0; i < list.length; i++) {
+				
+				// Create a new row
+				trow = table.insertRow(-1);
+				for (var j = 0; j < cols.length; j++) {
+					var cell = trow.insertCell(-1);
+					
+					// Inserting the cell at particular place
+					cell.innerHTML = list[i][cols[j]];
+				}
+			}
+			
+			// Add the newly created table containing json data
+			var el = document.getElementById("table");
+			el.innerHTML = "";
+			el.appendChild(table);
+		}
+	</script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} <!DOCTYPE HTML>
+<html>
+
+<head>
+	<title>
+		How to convert JSON data to a html
+		table using JavaScript/jQuery ?
+	</title>
+	
+	<script src=
+"https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+	</script>
+</head>
+
+<body style = "text-align:center;">
+	
+	<h1 style = "color:green;">
+		GeeksForGeeks
+	</h1>
+	
+	<p id = "GFG_UP" style =
+			"font-size: 15px; font-weight: bold;">
+	</p>
+
+	
+	<button onclick = "GFG_FUN()">
+		click here
+	</button>
+	
+	<br><br>
+	
+	<table id="table" align = "center" border="1px"></table>
+	
+	<script>
+		var el_up = document.getElementById("GFG_UP");
+		
+		var list = [{{ api }}];
+		
+		el_up.innerHTML = "Click on the button to create the "
+				+ "table from the JSON data.<br><br>"
+				+ JSON.stringify(list[0]) + "<br>"
+				+ JSON.stringify(list[1]) + "<br>"
+                + JSON.stringify(list[2]) + "<br>"
+                + JSON.stringify(list[3]) + "<br>"
+                + JSON.stringify(list[4]) + "<br>"
+				+ JSON.stringify(list[5]);
+		
+		function GFG_FUN() {
+			var cols = [];
+			
+			for (var i = 0; i < list.length; i++) {
+				for (var k in list[i]) {
+					if (cols.indexOf(k) === -1) {
+						
+						// Push all keys to the array
+						cols.push(k);
+					}
+				}
+			}
+			
+			// Create a table element
+			var table = document.createElement("table");
+			
+			// Create table row tr element of a table
+			var tr = table.insertRow(-1);
+			
+			for (var i = 0; i < cols.length; i++) {
+				
+				// Create the table header th element
+				var theader = document.createElement("th");
+				theader.innerHTML = cols[i];
+				
+				// Append columnName to the table row
+				tr.appendChild(theader);
+			}
+			
+			// Adding the data to the table
+			for (var i = 0; i < list.length; i++) {
+				
+				// Create a new row
+				trow = table.insertRow(-1);
+				for (var j = 0; j < cols.length; j++) {
+					var cell = trow.insertCell(-1);
+					
+					// Inserting the cell at particular place
+					cell.innerHTML = list[i][cols[j]];
+				}
+			}
+			
+			// Add the newly created table containing json data
+			var el = document.getElementById("table");
+			el.innerHTML = "";
+			el.appendChild(table);
+		}
+	</script>
+</body>
+
+</html> {% endcomment %}

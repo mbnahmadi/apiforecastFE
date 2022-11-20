@@ -1,0 +1,138 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<link rel="stylesheet" href="/static/css/bootstrap.css">
+</head>
+
+<body>
+	<div class="container">
+		<table class="table table-striped">
+			<thead class=" table-dark">
+				<tr>
+					<th>#</th>
+					{% comment %} {% for key in keys %} {% endcomment %}
+					<th>date</th>
+					<th>Dir(deg)</th>
+					<th>Hs(ft)</th>
+					<th>Hmax(ft)</th>
+					<th>Tp(s)</th>
+					{% comment %} {% endfor %} {% endcomment %}
+				</tr>
+			</thead>
+			<tbody>
+				{% for value in csvval %}
+				<tr>
+					<th>{{ forloop.counter }}</th>
+					{% for item in value %}
+					<td>
+						{{ item }}
+					</td>
+					{% endfor %}
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<script src="/static/js/bootstrap.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+	<canvas id="myChart" width=600px height=100px ></canvas>
+	<script>
+		const ctx = document.getElementById('myChart').getContext('2d');
+		const myChart = new Chart(ctx, {
+			type: 'line',
+			data: {
+				labels: [{%for time in times%}"{{time}}",{% endfor %}],
+				datasets: [{
+					label: 'Hs(ft)',
+					//yAxisID : 'a2',
+					data: [{% for data in a3 %} {{data}}, {% endfor %}],
+					borderColor : 'rgb(0,191,255)'
+				},
+                {
+                    label: 'Hmax(ft)',
+                    data: [{% for data in a4 %} {{data}}, {% endfor %}],
+					borderColor : 'rgb(0,0,139)'
+                    
+                }]
+			},
+			options: {
+				//responsive : false,
+				lineTension : 0.6,
+				radius : 0,
+				borderWidth : 2,
+				animation : true,
+				//delay : 100,
+				title : {
+					display : true,
+					text : "title" ,
+				},
+				scales: {
+					
+						}
+					}
+				});
+	</script>
+	
+	<canvas id="chart2" width=600px height=100px ></canvas>
+	<script>
+		const ssx = document.getElementById('chart2').getContext('2d');
+		const chart2 = new Chart(ssx, {
+			type: 'line',
+			data: {
+				labels: [{%for time in times%}"{{time}}",{% endfor %}],
+				datasets: [{
+					label: 'direction(deg)',
+				//	yAxisID : 'V5',
+					data: [{% for data in a2 %} {{data}}, {% endfor %}],
+					borderColor : 'rgb(139, 0 , 0)'
+				},
+				]
+			},
+			options: {
+				//responsive : false,
+				lineTension : 0.6,
+				radius : 0,
+				borderWidth : 2,
+				animation : true,
+				//delay : 100,				
+				scales: {
+					
+						}
+					}
+				});
+	</script>
+
+    <canvas id="chart3" width=600px height=100px ></canvas>
+	<script>
+		const gtx = document.getElementById('chart3').getContext('2d');
+		const chart3 = new Chart(gtx, {
+			type: 'line',
+			data: {
+				labels: [{%for time in times%}"{{time}}",{% endfor %}],
+				datasets: [{
+					label: 'Tp',
+				//	yAxisID : 'V5',
+					data: [{% for data in a5 %} {{data}}, {% endfor %}],
+					borderColor : 'rgb(54,1,63)'
+				},
+				]
+			},
+			options: {
+				//responsive : false,
+				lineTension : 0.6,
+				radius : 0,
+				borderWidth : 2,
+				animation : true,
+				//delay : 100,				
+				scales: {
+					
+						}
+					}
+				});
+	</script>
+    
+    {% comment %} <p>{% for data in a5 %} {{data}} {% endfor %}</p> {% endcomment %}
+	</body>
+
+</html>
