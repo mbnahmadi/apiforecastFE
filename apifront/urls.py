@@ -24,5 +24,7 @@ urlpatterns = [
     path('table/<str:name>' , TableView, name="table"),
     path('list/' , ListView, name="list"),
     # path('chart/<str:name>' , Chart),
-    path('waveforecast/<str:name>',CSVTableView),
+    path('waveforecast/<str:name>',CSVTableView, name = "waveforecast"),
+    path('index/',index),
+    path('button/',button),
 ]

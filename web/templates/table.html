@@ -6,19 +6,19 @@
 </head>
 
 <body>
-	<div class="container">
-		<table class="table table-striped">
+	<div class="container col-12">
+		<table class="table table-striped shadow-lg p-3 mb-5 bg-white" , style="margin-top:50px;">
 			<thead class=" table-dark">
 				<tr>
 					<th>#</th>
 					{% comment %} {% for key in keys %} {% endcomment %}
-					<th>time</th>
-					<th>t_min</th>
-					<th>speed_min(m/s)</th>
-					<th>speed_min(knots)</th>
-					<th>direction</th>
-					<th>vx(knots)</th>
-					<th>vy(knots)</th>
+					<th>time<br>(s)</th>
+					<th>t_min<br>(s)</th>
+					<th>speed_min<br>(m/s)</th>
+					<th>speed_min<br>(knots)</th>
+					<th>direction<br>(deg)</th>
+					<th>vx<br>(knots)</th>
+					<th>vy<br>(knots)</th>
 					{% comment %} {% endfor %} {% endcomment %}
 				</tr>
 			</thead>
@@ -36,68 +36,70 @@
 			</tbody>
 		</table>
 	</div>
-	<script src="/static/js/bootstrap.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-	<canvas id="myChart" width=600px height=100px ></canvas>
-	<script>
-		const ctx = document.getElementById('myChart').getContext('2d');
-		const myChart = new Chart(ctx, {
-			type: 'line',
-			data: {
-				labels: [{%for time in times%}"{{time}}",{% endfor %}],
-				datasets: [{
-					label: 'wind speed',
-					yAxisID : 'v4',
-					data: [{% for data in v4 %} {{data}}, {% endfor %}],
-					borderColor : 'rgb(0,0,139)'
-				}]
-			},
-			options: {
-				//responsive : false,
-				lineTension : 0.6,
-				radius : 0,
-				borderWidth : 2,
-				animation : true,
-				//delay : 100,
-				title : {
-					display : true,
-					text : "title" ,
+	<div class="container col-12">
+		<script src="/static/js/bootstrap.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+		<canvas id="myChart" width=600px height=100px ></canvas>
+		<script>
+			const ctx = document.getElementById('myChart').getContext('2d');
+			const myChart = new Chart(ctx, {
+				type: 'line',
+				data: {
+					labels: [{%for time in times%}"{{time}}",{% endfor %}],
+					datasets: [{
+						label: 'wind speed',
+						yAxisID : 'v4',
+						data: [{% for data in v4 %} {{data}}, {% endfor %}],
+						borderColor : 'rgb(0,0,139)'
+					}]
 				},
-				scales: {
-					
+				options: {
+					//responsive : false,
+					lineTension : 0.6,
+					radius : 0,
+					borderWidth : 2,
+					animation : true,
+					//delay : 100,
+					title : {
+						display : true,
+						text : "title" ,
+					},
+					scales: {
+						
+							}
 						}
-					}
-				});
-	</script>
-	
-	<canvas id="chart2" width=600px height=100px ></canvas>
-	<script>
-		const ssx = document.getElementById('chart2').getContext('2d');
-		const chart2 = new Chart(ssx, {
-			type: 'line',
-			data: {
-				labels: [{%for time in times%}"{{time}}",{% endfor %}],
-				datasets: [{
-					label: 'direction',
-					yAxisID : 'V5',
-					data: [{% for data in v5 %} {{data}}, {% endfor %}],
-					borderColor : 'rgb(139, 0 , 0)'
+					});
+		</script>
+		
+		<canvas id="chart2" width=600px height=100px ></canvas>
+		<script>
+			const ssx = document.getElementById('chart2').getContext('2d');
+			const chart2 = new Chart(ssx, {
+				type: 'line',
+				data: {
+					labels: [{%for time in times%}"{{time}}",{% endfor %}],
+					datasets: [{
+						label: 'direction',
+						yAxisID : 'V5',
+						data: [{% for data in v5 %} {{data}}, {% endfor %}],
+						borderColor : 'rgb(139, 0 , 0)'
+					},
+					]
 				},
-				]
-			},
-			options: {
-				//responsive : false,
-				lineTension : 0.6,
-				radius : 0,
-				borderWidth : 2,
-				animation : true,
-				//delay : 100,				
-				scales: {
-					
+				options: {
+					//responsive : false,
+					lineTension : 0.6,
+					radius : 0,
+					borderWidth : 2,
+					animation : true,
+					//delay : 100,				
+					scales: {
+						
+							}
 						}
-					}
-				});
-	</script>
+					});
+		</script>
+	</div>
 	</body>
 
 </html>
