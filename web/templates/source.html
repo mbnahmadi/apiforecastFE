@@ -1,82 +1,46 @@
 <!DOCTYPE HTML> 
 <html>
-	<head></head>
+	<head>
+		<link rel="stylesheet" href="/static/css/bootstrap.css">
+	</head>
 	<body>
-			<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-			<canvas id="myChart" width=600px height=100px ></canvas>
-			<script>
-				const ctx = document.getElementById('myChart').getContext('2d');
-				const myChart = new Chart(ctx, {
-					type: 'line',
-					data: {
-						labels: [{%for time in times%}"{{time}}",{% endfor %}],
-						datasets: [{
-							label: 'V5',
-							yAxisID : 'V5',
-							data: [{% for data in v5 %} {{data}}, {% endfor %}],
-							borderColor : 'rgb(255,150,150)'
-						},
-						{
-							label: 'V6',
-							yAxisID : 'V6',
-							data: [{% for data in v6 %} {{data}}, {% endfor %}],
-							borderColor : 'rgb(150,255,150)'
-
-						},
-						{
-							label: 'V7',
-							yAxisID : 'V7',
-							data: [{% for data in v7 %} {{data}}, {% endfor %}],
-							borderColor : 'rgb(150,150,255)'
+		<div style="width:800px;">
+			<canvas id="myChart"></canvas>
+		</div>
+		  
+		  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		  
+		  <script>
+			const ctx = document.getElementById('myChart');
+		  
+			new Chart(ctx, {
+			  type: 'line',
+			  data: {
+				labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+				datasets: [{
+				  label: '# of Votes',
+				  data: [12, 19, 3, 5, 2, 3],
+				  borderWidth: 1
+				}]
+			  },
+			  options: {
+				scales: {
+					x: {
+						title: {
+						  display: true,
+						  text: 'Month'
 						}
-						]
-					},
-					options: {
-						//responsive : false,
-						lineTension : 0.6,
-						radius : 0,
-						borderWidth : 2,
-						animation : true,
-						//delay : 100,
-						scales: {
-							yAxis: [
-								{
-									id : 'V5',
-									position : 'right',
-									display : true,
-									scaleLable : {
-										display : true,
-										lablestring : 'V5'
-									}
-								},
-								{
-									id : 'V6',
-									position : 'left',
-									display : true,
-									scaleLable : {
-										display : true,
-										lablestring : 'V6'
-									}
-								},
-								{
-									id : 'V7',
-									display : true,
-									position : 'left',
-									scaleLable : {
-										display : true,
-										lablestring : 'V7'
-									}
-								},
-								],
-								x:[{
-									type: 'timeseries',
-								},]
-					  		 }
-				   			}
-			  			});
-			</script>
-			{% comment %} <p>{% for data in v5 %} {{data}} {% endfor %}</p> {% endcomment %}
-			{% comment %} <p>{%for time in times%}{{time}},{% endfor %}</p> {% endcomment %}
-
-		</body>
+					  },
+					  y: {
+						title: {
+						  display: true,
+						  text: 'Value'
+						},
+						}
+					}
+			  }
+			});
+		  </script>
+			
+	</body>
 </html>

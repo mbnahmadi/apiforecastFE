@@ -7,16 +7,16 @@
 
 <body>
 	<div class="container">
-		<table class="table table-striped">
+		<table class="table table-striped shadow p-3 mb-5 bg-white rounded" , style="margin-top:50px;">
 			<thead class=" table-dark">
 				<tr>
 					<th>#</th>
 					{% comment %} {% for key in keys %} {% endcomment %}
 					<th>date</th>
-					<th>Dir(deg)</th>
-					<th>Hs(ft)</th>
-					<th>Hmax(ft)</th>
-					<th>Tp(s)</th>
+					<th>Dir<br>(deg)</th>
+					<th>Hs<br>(ft)</th>
+					<th>Hmax<br>(ft)</th>
+					<th>Tp<br>(s)</th>
 					{% comment %} {% endfor %} {% endcomment %}
 				</tr>
 			</thead>
@@ -34,6 +34,7 @@
 			</tbody>
 		</table>
 	</div>
+	<div class="container col-10 border rounded shadow p-3 mb-5 bg-white rounded" , style="margin-top: 65px; ">
 	<script src="/static/js/bootstrap.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
 	<canvas id="myChart" width=600px height=100px ></canvas>
@@ -45,14 +46,18 @@
 				labels: [{%for time in times%}"{{time}}",{% endfor %}],
 				datasets: [{
 					label: 'Hs(ft)',
+					fill : true,
 					//yAxisID : 'a2',
 					data: [{% for data in a3 %} {{data}}, {% endfor %}],
-					borderColor : 'rgb(0,191,255)'
+					borderColor : 'rgb(114, 247, 255)',
+					backgroundColor : 'rgb(181, 255, 255)',
 				},
                 {
                     label: 'Hmax(ft)',
+					fill : true,
                     data: [{% for data in a4 %} {{data}}, {% endfor %}],
-					borderColor : 'rgb(0,0,139)'
+					borderColor : 'rgb(0, 191, 255)',
+					backgroundColor : 'rgb(128, 223, 255)',
                     
                 }]
 			},
@@ -63,17 +68,42 @@
 				borderWidth : 2,
 				animation : true,
 				//delay : 100,
-				title : {
-					display : true,
-					text : "title" ,
+				plugins: {
+					legend: {
+						display : true,
+						labels: {
+							// This more specific font property overrides the global property
+							font: {
+								size: 16
+							}
+						}
+					}
 				},
 				scales: {
+					x: {
+						grid: {
+						  display: false
+						}
+					  },
+					  y: {
+						title: {
+						  display: true,
+						  text: 'time(hour)',
+						  font: {
+							size: 14
+						}
+						},
+						grid: {
+							display: false
+						  },
+						}
 					
 						}
 					}
 				});
 	</script>
-	
+	</div>
+	<div class="container col-10 border rounded shadow p-3 mb-5 bg-white rounded">
 	<canvas id="chart2" width=600px height=100px ></canvas>
 	<script>
 		const ssx = document.getElementById('chart2').getContext('2d');
@@ -83,13 +113,35 @@
 				labels: [{%for time in times%}"{{time}}",{% endfor %}],
 				datasets: [{
 					label: 'direction(deg)',
+					fill : true,
 				//	yAxisID : 'V5',
 					data: [{% for data in a2 %} {{data}}, {% endfor %}],
-					borderColor : 'rgb(139, 0 , 0)'
-				},
+					borderColor : 'rgb(255, 87, 51)',
+					backgroundColor : 'rgb(255, 173, 126)',
+					
+				},              
 				]
 			},
 			options: {
+				plugins: {
+					title: {
+						display: true,
+						text: 'Direction(deg)',
+						font: {
+							size: 16
+						}
+						
+					},
+					legend: {
+						display : false,
+						labels: {
+							// This more specific font property overrides the global property
+							font: {
+								size: 16
+							}
+						}
+					}
+				},
 				//responsive : false,
 				lineTension : 0.6,
 				radius : 0,
@@ -97,12 +149,30 @@
 				animation : true,
 				//delay : 100,				
 				scales: {
+					x: {
+						grid: {
+						  display: false
+						}
+					  },
+					  y: {
+						title: {
+						  display: true,
+						  text: 'time(hour)',
+						  font: {
+							size: 14
+						}
+						},
+						grid: {
+							display: false
+						  },
+						}
 					
 						}
 					}
 				});
 	</script>
-
+	</div>
+	<div class="container col-10 border rounded shadow p-3 mb-5 bg-white rounded">
     <canvas id="chart3" width=600px height=100px ></canvas>
 	<script>
 		const gtx = document.getElementById('chart3').getContext('2d');
@@ -112,13 +182,34 @@
 				labels: [{%for time in times%}"{{time}}",{% endfor %}],
 				datasets: [{
 					label: 'Tp',
+					fill : true,
 				//	yAxisID : 'V5',
 					data: [{% for data in a5 %} {{data}}, {% endfor %}],
-					borderColor : 'rgb(54,1,63)'
+					borderColor : 'rgb(82, 182, 64)',
+					backgroundColor : 'rgb(168, 255, 143)',
 				},
 				]
 			},
 			options: {
+				plugins: {
+					title: {
+						display: true,
+						text: 'Tp',
+						font: {
+							size: 16
+						}
+						
+					},
+					legend: {
+						display : false,
+						labels: {
+							// This more specific font property overrides the global property
+							font: {
+								size: 16
+							}
+						}
+					}
+				},
 				//responsive : false,
 				lineTension : 0.6,
 				radius : 0,
@@ -126,12 +217,29 @@
 				animation : true,
 				//delay : 100,				
 				scales: {
+					x: {
+						grid: {
+						  display: false
+						}
+					  },
+					  y: {
+						title: {
+						  display: true,
+						  text: 'time(hour)',
+						  font: {
+							size: 14
+						}
+						},
+						grid: {
+							display: false
+						  },
+						}
 					
 						}
 					}
 				});
 	</script>
-    
+	</div>
     {% comment %} <p>{% for data in a5 %} {{data}} {% endfor %}</p> {% endcomment %}
 	</body>
 

@@ -7,12 +7,12 @@
 
 <body>
 	<div class="container col-12">
-		<table class="table table-striped shadow-lg p-3 mb-5 bg-white" , style="margin-top:50px;">
+		<table class="table table-striped shadow p-3 mb-5 bg-white rounded" , style="margin-top:50px;">
 			<thead class=" table-dark">
 				<tr>
 					<th>#</th>
 					{% comment %} {% for key in keys %} {% endcomment %}
-					<th>time<br>(s)</th>
+					<th>time<br>(h)</th>
 					<th>t_min<br>(s)</th>
 					<th>speed_min<br>(m/s)</th>
 					<th>speed_min<br>(knots)</th>
@@ -36,41 +36,106 @@
 			</tbody>
 		</table>
 	</div>
-	<div class="container col-12">
+
+	<div class="container col-12 border rounded shadow-none p-3 mb-5 bg-light rounded" , style="margin-top: 65px; ">
 		<script src="/static/js/bootstrap.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-		<canvas id="myChart" width=600px height=100px ></canvas>
+		<canvas id="lineChart" width=700px height=180px ></canvas>
 		<script>
-			const ctx = document.getElementById('myChart').getContext('2d');
-			const myChart = new Chart(ctx, {
+			const ctx = document.getElementById('lineChart').getContext('2d');
+			const lineChart = new Chart(ctx, {
 				type: 'line',
 				data: {
-					labels: [{%for time in times%}"{{time}}",{% endfor %}],
+					labels: [{%for time in times%} "{{time}}",{% endfor %}],
 					datasets: [{
-						label: 'wind speed',
-						yAxisID : 'v4',
-						data: [{% for data in v4 %} {{data}}, {% endfor %}],
-						borderColor : 'rgb(0,0,139)'
+						label: 'Wind Speed',
+						//fill : true,
+					//	yAxisID : 'v4',
+						data: [{% for data in v4 %} "{{data}}", {% endfor %}],
+						borderColor : 'rgb(0,0,139)',
+						//backgroundColor : 'rgb(0,0,139)',
 					}]
 				},
 				options: {
-					//responsive : false,
-					lineTension : 0.6,
-					radius : 0,
-					borderWidth : 2,
-					animation : true,
-					//delay : 100,
-					title : {
-						display : true,
-						text : "title" ,
-					},
-					scales: {
-						
+					plugins: {
+						title: {
+							display: true,
+							text: 'Wind Speed',
+							font: {
+								size: 16
+							}
+							
+						},
+						legend: {
+							display : false,
+							labels: {
+								// This more specific font property overrides the global property
+								font: {
+									size: 16
+								}
 							}
 						}
-					});
+					},
+					//responsive : false,
+					lineTension : 0.6,
+					//radius : 1,
+					pointHoverRadius : 5,
+					borderWidth : 2,
+					animation : true,
+					pointRadius : 3,
+					//pointStyle : 'rectRot',
+					pointStyle : 'circle ch',
+					backgroundColor : 'rgb(	100, 149, 237)',
+					pointBorderColor : 'rgb(25, 25, 112)',
+					//delay : 100,
+					
+					scales: {
+						x: {
+							ticks: { color: 'black', beginAtZero: true },
+							border: {
+								display: true,
+							  },
+							grid: {
+								color: 'rgba(0,0,0,0.1)',
+       							borderColor: 'black' ,
+							  	display: true,
+							 // drawOnChartArea: false,
+							  //color:'rgb(0,0,0)',
+							  //zeroLineColor: 'rgb(0,0,0)',
+							  	zeroLineColor: "#fff",
+							  
+						  },
+						},
+						  y: {
+							ticks: { color: 'black', beginAtZero: true }, //change number of color
+							border: {
+								display: true,
+								//backgroundColor:'rgb(0,0,0)'
+							  },
+							title: {
+							  display: true,
+							  text: 'time(hour)',
+							  font: {
+								size: 14
+							}
+							},
+							grid: {
+								color: 'rgba(0,0,0,0.1)',
+       							borderColor: 'black' ,
+							//	drawOnChartArea: false,
+								display: true,
+								//color:'rgb(0,0,0)',
+								zeroLineColor: "#fff",
+								
+								
+							  },
+							}
+					    }
+					}
+				});
 		</script>
-		
+	    </div>
+	<div class="container col-10 border rounded shadow p-3 mb-5 bg-white rounded">	
 		<canvas id="chart2" width=600px height=100px ></canvas>
 		<script>
 			const ssx = document.getElementById('chart2').getContext('2d');
@@ -79,12 +144,14 @@
 				data: {
 					labels: [{%for time in times%}"{{time}}",{% endfor %}],
 					datasets: [{
-						label: 'direction',
-						yAxisID : 'V5',
+						label: 'Direction',
+						fill : true,
+						fillColor : 'blue',
+					//	yAxisID : 'V5',
 						data: [{% for data in v5 %} {{data}}, {% endfor %}],
-						borderColor : 'rgb(139, 0 , 0)'
-					},
-					]
+						borderColor : 'rgb(255, 87, 51)',
+						backgroundColor : 'rgb(255, 173, 126)',
+					}]
 				},
 				options: {
 					//responsive : false,
@@ -94,12 +161,46 @@
 					animation : true,
 					//delay : 100,				
 					scales: {
-						
+						x: {
+							grid: {
+							  display: false
 							}
-						}
-					});
+						  }, 
+						y: {
+							title: {
+							  display: true,
+							  text: 'time(hour)'
+							},
+							grid: {
+								display: false
+							  },
+							}
+						
+					    },
+						plugins: {
+							title: {
+								display: true,
+								text: 'Direction',
+								font: {
+									size: 18
+								}
+								
+							},
+							legend: {
+								display : false,
+								labels: {
+									// This more specific font property overrides the global property
+									font: {
+										size: 14
+									}
+								}
+							}
+						},
+					}
+				});
 		</script>
 	</div>
+	
 	</body>
 
 </html>

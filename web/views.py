@@ -140,7 +140,7 @@ def CSVTableView(request, name):
             break
         start = start.replace(hour=start.hour + 1)
     time = [x.strftime(TIME_FORMAT) for x in time] 
-    times = time * 6
+    times = time * 5
     context={
         "api" : r,
         "keys": keys,
