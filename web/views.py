@@ -9,6 +9,8 @@ from django.http import HttpResponse
 # import csv
 import datetime
 import pathlib
+from datetime import datetime
+
 # import json
 # Create your views here.
 
@@ -58,7 +60,7 @@ def TableView(request, name):
     #counting hours of the day   
     start = datetime.time(0,0) # 10:00
     end = datetime.time(23,0) # 10:05
-    TIME_FORMAT = "%H:%M" # Format for hours and minutes
+    TIME_FORMAT = "%H" # Format for hours and minutes
     time = [] # List of times 
     while start <= end:
         time.append(start)
@@ -67,6 +69,22 @@ def TableView(request, name):
         start = start.replace(hour=start.hour + 1)
     time = [x.strftime(TIME_FORMAT) for x in time] 
     times = time * 10
+    
+    
+    list_api = requests.get('http://127.0.0.1:5000/api/')
+    list_api = list_api.json()
+    lists = []
+    timelist = []
+
+    
+    for i in list_api:
+        fpath = pathlib.Path(i)
+        j = fpath.stem
+        lists.append(j[0:8])
+    for k in lists:
+        newtime = datetime.strptime(k, '%Y%m%d').strftime('%a %d-%b')
+        timelist.append(newtime)
+        
     context={
         "api" : r,
         "keys": keys,
@@ -75,6 +93,8 @@ def TableView(request, name):
         "v5" : list_b ,
         # "v7" : list_c ,
         "times" : times,
+        "list_api": lists,
+        "mylist" : timelist,
     }
     return render(request, "table.html", context)
 
@@ -83,24 +103,22 @@ def ListView(request):
     list_api = requests.get('http://127.0.0.1:5000/api/')
     list_api = list_api.json()
     lists = []
+    timelist = []
+
     
-    exts = {'.mean','.csv'}
     for i in list_api:
         fpath = pathlib.Path(i)
-        # # j = str(i)
         j = fpath.stem
-        # k = fpath.suffix
-        # lists.update(
-        #     {'name':j , 'suffix' : k}
-        # )
-        # # i.splitext()
-        # # print (i[1])
-        # # print (i)
-        # print (lists)
-        lists.append(j)   #.removesuffix('.mean'),i.removesuffix('.csv') 
-      #  lists.append(j.removesuffix('.csv'))
+        lists.append(j[0:8])
+    for k in lists:
+        newtime = datetime.strptime(k, '%Y%m%d').strftime('%a %d-%b')
+        timelist.append(newtime)
+        #print(mylist)    
+        #print (type(mylist))    
+
     context={
         "list_api": lists,
+        "mylist" : timelist,
     }
     return render(request, "list.html", context)
 

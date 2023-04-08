@@ -8,11 +8,21 @@
 <body>
     <div class="container">
         <header class="d-flex justify-content-center py-3">
+            <div>
             <ul class="nav nav-pills">
                 {% for item in list_api %}
                 <li class="nav-item"><a href="{% url 'table' item %}" class="nav-link">{{ item }}</a></li>
                 {% endfor %}
             </ul>
+        </div> 
+            
+            <div>
+                <ul class="nav nav-pills">
+                {% for myitem in mylist %}
+                    <li class="nav-item"><hr>{{ myitem }}------ <hr></li>
+                {% endfor %}
+                </ul>
+            </div>    
         </header>
     </div>
     <script src="/static/js/bootstrap.js"></script>

@@ -32,6 +32,7 @@
 						},
 						scales: {
 							x: {
+								type: 'timeseries',
 								grid: {
 								  display: false
 								}
@@ -79,3 +80,157 @@
 
 		</body>
 </html>
+
+
+<script>
+	const data = {
+		labels: [{%for time in times%} "{{time}}",{% endfor %}],
+			datasets: [{
+				label: 'Wind Speed',
+				//fill : true,
+			//	yAxisID : 'v4',
+				data: [{% for data in v4 %} "{{data}}", {% endfor %}],
+				borderColor : 'rgb(0,0,139)',
+				//backgroundColor : 'rgb(0,0,139)',
+			}]
+		
+	};
+	const customBorder = {
+		id: 'customBorder',
+		beforDatasetsDraw(chart,arg,pluginsOptions) {
+			const {ctx,chartArea: {top,bottom,left,right,width,height} } = cahrt;
+			ctx.save();
+			ctx.beginPath();
+			ctx.lineWidth=3;
+			ctx.moveTo(left , top);
+			ctx.lineTo(right , top);
+			ctx.lineTo(right , bottom);
+			ctx.lineTo(left , bottom);
+			ctx.stroke();
+		}
+	};
+	const config = {
+		type: 'line',
+		data: {
+			labels: [{%for time in times%} "{{time}}",{% endfor %}],
+			datasets: [{
+				label: 'Wind Speed',
+				//fill : true,
+			//	yAxisID : 'v4',
+				data: [{% for data in v4 %} "{{data}}", {% endfor %}],
+				borderColor : 'rgb(0,0,139)',
+				//backgroundColor : 'rgb(0,0,139)',
+			}]
+		},
+		options: {
+			{% comment %} layout: {
+				padding: 20
+			}, {% endcomment %}
+			plugins: {
+				[customBorder],
+				{% comment %} colors: {
+					forceOverride: true
+				  }, {% endcomment %}
+				  
+				title: {
+					display: true,
+					text: 'Wind Speed',
+					font: {
+						size: 16
+					}
+					
+				},
+				legend: {
+					display : false,
+					labels: {
+						// This more specific font property overrides the global property
+						font: {
+							size: 16
+						}
+					}
+				}
+			},
+			//responsive : false,
+			lineTension : 0.6,
+			//radius : 1,
+			pointHoverRadius : 5,
+			borderWidth : 2,
+			animation : false,
+			pointRadius : 3,
+			//pointStyle : 'rectRot',
+			pointStyle : 'circle ch',
+			backgroundColor : 'rgb(	100, 149, 237)',
+			pointBorderColor : 'rgb(25, 25, 112)',
+			//delay : 100,
+			
+			scales: {
+				x: {
+					drowBorder: false,
+					//type: 'timeseries',
+					ticks: { color: 'black', beginAtZero: true },
+					border: {
+						display: true,
+					},
+					grid: {
+						color: 'rgba(0,0,0,0.1)',
+						borderColor: 'black' ,
+						display: true,
+						// drawOnChartArea: false,
+						//color:'rgb(0,0,0)',
+						//zeroLineColor: 'rgb(0,0,0)',
+						//zeroLineColor: "#fff",
+						
+					},
+				},
+				  y: {
+					drowBorder: false,
+					ticks: { color: 'black', beginAtZero: true }, //change number of color
+					border: {
+						display: true,
+						//backgroundColor:'rgb(0,0,0)'
+					  },
+					title: {
+					  display: true,
+					  text: 'time(hour)',
+					  font: {
+						size: 14
+					}
+					},
+					grid: {
+						color: 'rgba(0,0,0,0.1)',
+						   borderColor: 'black' ,
+					//	drawOnChartArea: false,
+						display: true,
+						//color:'rgb(0,0,0)',
+						zeroLineColor: "#fff",
+						
+						
+					  },
+					}
+				}
+			}
+
+	};
+
+	const myChart = new chart(document.getElementById('myChart'),
+	config
+	);
+</script>
+
+
+const customBorder = {
+	id: 'customBorder',
+	beforeDatasetsDraw(chart,args,pluginOptions) {
+		const { ctx,chartArea: { top,bottom,left,right,width,height } } = cahrt;
+		ctx.save();
+		ctx.beginPath();
+		ctx.lineWidth=3;
+		ctx.strokeStyle = 'rgb(0,0,0)';
+		ctx.moveTo(left , top);
+		ctx.lineTo(right , top);
+		ctx.lineTo(right , bottom);
+		ctx.lineTo(left , bottom);
+		ctx.closePath();
+		ctx.stroke();
+	}
+}
