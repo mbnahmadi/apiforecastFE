@@ -10,6 +10,7 @@ from django.http import HttpResponse
 import datetime
 import pathlib
 from datetime import datetime
+import datetime
 
 # import json
 # Create your views here.
@@ -39,6 +40,7 @@ def source(request):
 def TableView(request, name):
     response = requests.get(f'http://127.0.0.1:5000/api/{name}')
     r = response.json()
+    #print(r)
     # html = '<html><body>%s</body></html>' %r
     keys = r[0].keys()
     val = []
@@ -71,19 +73,19 @@ def TableView(request, name):
     times = time * 10
     
     
-    list_api = requests.get('http://127.0.0.1:5000/api/')
-    list_api = list_api.json()
-    lists = []
-    timelist = []
+    #list_api = requests.get('http://127.0.0.1:5000/api/')
+    # list_api = response.json()
+    # lists = []
+    # timelist = []
 
     
-    for i in list_api:
-        fpath = pathlib.Path(i)
-        j = fpath.stem
-        lists.append(j[0:8])
-    for k in lists:
-        newtime = datetime.strptime(k, '%Y%m%d').strftime('%a %d-%b')
-        timelist.append(newtime)
+    # for i in list_api:
+    #     fpath = pathlib.Path(i)
+    #     j = fpath.stem
+    #     lists.append(j[0:8])
+    # for k in lists:
+    #     newtime = datetime.strptime(k, '%Y%m%d').strftime('%a %d-%b')
+    #     timelist.append(newtime)
         
     context={
         "api" : r,
@@ -93,8 +95,8 @@ def TableView(request, name):
         "v5" : list_b ,
         # "v7" : list_c ,
         "times" : times,
-        "list_api": lists,
-        "mylist" : timelist,
+        # "list_api": lists,
+        # "mylist" : timelist,
     }
     return render(request, "table.html", context)
 

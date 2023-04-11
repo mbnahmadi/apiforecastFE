@@ -9,6 +9,7 @@
 	<div class="container col-12">
 		<table class="table table-striped shadow p-3 mb-5 bg-white rounded" , style="margin-top:50px;">
 			<thead class=" table-dark">
+				<p>{{timelist}}</p>
 				<tr>
 					<th>#</th>
 					{% comment %} {% for key in keys %} {% endcomment %}
@@ -99,7 +100,7 @@
 				}
 				}
 			
-			
+{% comment %} 			
 			const chartAreaBorder = {
 				id: 'chartAreaBorder',
 				beforeDraw(chart, args, options) {
@@ -112,7 +113,7 @@
 				  ctx.strokeRect(left, top, width, height);
 				  ctx.restore();
 				}
-			  };
+			  }; {% endcomment %}
 			{% comment %} const customVerticalLine = {
 				id: 'customVerticalLine',
 				afterDatasetsDraw(chart,args,plugins) {
@@ -281,9 +282,57 @@
 				});
 		</script>
 	    </div>
-	<div class="container col-10 border rounded shadow p-3 mb-5 bg-white rounded">	
-		<canvas id="chart2" width=600px height=100px ></canvas>
+	<div class="container col-12 border rounded shadow-none p-3 mb-5 bg-light rounded" , style="margin-top: 65px; ">	
+		<canvas id="chart2" width=700px height=190px ></canvas>
 		<script>
+			const datehighlighter2 = {
+				id : "datehighlighter2",
+				beforeDatasetsDraw(chart , args , plugins , options) {
+					const { ctx , chartArea : {top , bottom , left , right , width , height},  scales : {x , y} } = chart;
+					//for (let i = 0 ; i < 242 ; i++){
+						//var ctx = chart.ctx;
+						//var xaxis = chart.scales['x'];
+						//var yaxis = chart.scales['y'];
+						//1
+						
+						ctx.fillStyle = 'rgba(211, 211, 211,0.8)';
+						ctx.fillRect(x.left+3, y.top, x.width/10, y.height);
+						//2
+						ctx.fillStyle = 'rgba(255, 255, 224,0.8)';
+						ctx.fillRect(x.left+3 + x.width/10, y.top, x.width/10, y.height);
+						//3
+						ctx.fillStyle = 'rgba(211, 211, 211,0.8)';
+						ctx.fillRect(x.left+2 + x.width/5, y.top, x.width/10, y.height);
+						//4
+						ctx.fillStyle = 'rgba(255, 255, 224,0.8)';
+						ctx.fillRect(x.left+1 + 3*x.width/10, y.top, x.width/10, y.height);
+						//5
+						ctx.fillStyle = 'rgba(211, 211, 211,0.8)';
+						ctx.fillRect(x.left+2 + 4*x.width/10, y.top, x.width/10, y.height);
+						//6
+						ctx.fillStyle = 'rgba(255, 255, 224,0.8)';
+						ctx.fillRect(x.left+2 + 5*x.width/10, y.top, x.width/10, y.height);
+						//7
+						ctx.fillStyle = 'rgba(211, 211, 211,0.8)';
+						ctx.fillRect(x.left+2 + 6*x.width/10, y.top, x.width/10, y.height);
+						//8
+						ctx.fillStyle = 'rgba(255, 255, 224,0.8)';
+						ctx.fillRect(x.left+2 + 7*x.width/10, y.top, x.width/10, y.height);
+						//9
+						ctx.fillStyle = 'rgba(211, 211, 211,0.8)';
+						ctx.fillRect(x.left+2 + 8*x.width/10, y.top, x.width/10, y.height);
+						//10
+						ctx.fillStyle = 'rgba(255, 255, 224,0.8)';
+						ctx.fillRect(x.left+2 + 9*x.width/10, y.top, x.width/10, y.height);
+						ctx.save();
+						ctx.strokeStyle = "black";
+						ctx.lineWidth = 3;
+						//ctx.setLineDash(options.borderDash || []);
+						//ctx.lineDashOffset = options.borderDashOffset;
+						ctx.strokeRect(left, top, width, height);
+						ctx.restore();
+				}
+				}
 			const ssx = document.getElementById('chart2').getContext('2d');
 			const chart2 = new Chart(ssx, {
 				type: 'line',
@@ -291,12 +340,12 @@
 					labels: [{%for time in times%}"{{time}}",{% endfor %}],
 					datasets: [{
 						label: 'Direction',
-						fill : true,
+						fill : false,
 						fillColor : 'blue',
 					//	yAxisID : 'V5',
-						data: [{% for data in v5 %} {{data}}, {% endfor %}],
+						data: [{% for data in v5 %} "{{data}}", {% endfor %}],
 						borderColor : 'rgb(255, 87, 51)',
-						backgroundColor : 'rgb(255, 173, 126)',
+						//backgroundColor : 'rgb(255, 173, 126)',
 					}]
 				},
 				options: {
@@ -304,31 +353,85 @@
 					lineTension : 0.6,
 					radius : 0,
 					borderWidth : 2,
-					animation : true,
+					animation : false,
+					pointHoverRadius : 5,
+					pointRadius : 2,
+					pointStyle : 'circle ch',
+					backgroundColor : 'rgb(249,69,69)',
+					pointBorderColor : 'rgb(187,0,0)',
 					//delay : 100,				
 					scales: {
 						x: {
+							offset : true,
+							ticks: {
+								autoSkip: true,
+								maxTicksLimit: 45,
+								color: 'black',
+								maxRotation: 0,
+                    			minRotation: 0,
+							},
+							drowBorder: false,
+							//type: 'timeseries',
+							border: {
+								display: true,
+							},
 							grid: {
-							  display: false,
+								borderDash: [3, 3],
+								borderDashOffset: 2,
+								tickMarkLength: 2 ,
+								//color : "red",
+								color: 'black',
+								display: true,
 							}
 						  }, 
 						y: {
+							offset : true,
+							drowBorder: false,
+							ticks: { color: 'black', beginAtZero: true }, //change number of color
+							border: {
+								display: true,
+								//backgroundColor:'rgb(0,0,0)'
+							  },
 							title: {
 							  display: true,
-							  text: 'time(hour)'
+							  text: 'time(hour)',
+							  font: {
+								size: 14
+							}
 							},
 							grid: {
-								display: false
+								tickMarkLength: 2 ,
+								borderDash: [3, 3],
+								borderDashOffset: 2,
+								color: 'black',
+       							//borderColor: 'black' ,
+							//	drawOnChartArea: false,
+								display: true,
+								//color:'rgb(0,0,0)',
+								zeroLineColor: "#fff",
+
+							
+								
 							  },
+							  
 							}
 						
 					    },
+								
 						plugins: {
+							datehighlighter: {
+								borderColor: 'red',
+								borderWidth: 2,
+								borderDash: [5, 5],
+								borderDashOffset: 2,
+							},
+						
+							//[customBorder] ,
 							title: {
 								display: true,
 								text: 'Direction',
 								font: {
-									size: 18
+									size: 16
 								}
 								
 							},
@@ -337,12 +440,13 @@
 								labels: {
 									// This more specific font property overrides the global property
 									font: {
-										size: 14
+										size: 16
 									}
 								}
 							}
 						},
-					}
+					},
+					plugins : [datehighlighter2]
 				});
 		</script>
 	</div>
