@@ -9,8 +9,8 @@ from django.http import HttpResponse
 # import csv
 import datetime
 import pathlib
-from datetime import datetime
 import datetime
+# from datetime import datetime
 
 # import json
 # Create your views here.
@@ -29,32 +29,26 @@ def show(request):
 
 
 def source(request):
-    # response = requests.get('http://127.0.0.1:8001/api/0')
-    # r = response.json()
-    # context = {"api" : r,
-    #            }
-    # # html = '<html><body>%s</body></html>' %r
+
     return render(request , "source.html" , {})
     
 
 def TableView(request, name):
     response = requests.get(f'http://127.0.0.1:5000/api/{name}')
     r = response.json()
-    #print(r)
-    # html = '<html><body>%s</body></html>' %r
     keys = r[0].keys()
     val = []
-    for i, item in enumerate(r):
+    for i, item in enumerate(r[:-1]):
         val.append([])
         for key in keys:
             val[i].append(item[key])
-    # print(val)
+    
     
     #chart
     list_a = []
     list_b = []
     # list_c = []
-    for i in r:
+    for i in r[:-1]:
         list_a.append(i['v4'])
         list_b.append(i['v5'])
         # list_c.append(i['v7'])
@@ -72,21 +66,17 @@ def TableView(request, name):
     time = [x.strftime(TIME_FORMAT) for x in time] 
     times = time * 10
     
-    
-    #list_api = requests.get('http://127.0.0.1:5000/api/')
-    # list_api = response.json()
-    # lists = []
-    # timelist = []
+    list_name = r[-1]  
+    list_name=list_name.values()
 
     
-    # for i in list_api:
-    #     fpath = pathlib.Path(i)
-    #     j = fpath.stem
-    #     lists.append(j[0:8])
-    # for k in lists:
-    #     newtime = datetime.strptime(k, '%Y%m%d').strftime('%a %d-%b')
-    #     timelist.append(newtime)
-        
+    for i in list_name:
+        # print (i)
+        fpath = pathlib.Path(i)
+        j = fpath.stem
+        j=j[0:8] 
+    newtime = datetime.datetime.strptime(j, '%Y%m%d').strftime('%a %d-%b')
+   
     context={
         "api" : r,
         "keys": keys,
@@ -96,7 +86,7 @@ def TableView(request, name):
         # "v7" : list_c ,
         "times" : times,
         # "list_api": lists,
-        # "mylist" : timelist,
+        "newtime" : newtime,
     }
     return render(request, "table.html", context)
 

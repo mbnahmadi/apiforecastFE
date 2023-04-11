@@ -4,8 +4,10 @@
 <head>
 	<link rel="stylesheet" href="/static/css/bootstrap.css">
 </head>
+{% comment %} ["00","06","12","18","00","06","12","18","00","06","12","18","00","06","12","18","00","06","12","18"] {% endcomment %}
 
 <body>
+	<p>{{newtime}}</p>
 	<div class="container col-12">
 		<table class="table table-striped shadow p-3 mb-5 bg-white rounded" , style="margin-top:50px;">
 			<thead class=" table-dark">
@@ -145,7 +147,6 @@
 			const lineChart = new Chart(ctx, {
 				type: 'line',
 				data: {
-					labels: [{%for time in times%} "{{time}}",{% endfor %}],
 					datasets: [{
 						label: 'Wind Speed',
 						//fill : true,
@@ -199,6 +200,7 @@
 					
 					scales: {
 						x: {
+							labels: [{%for time in times%} "{{time}}",{% endfor %}],
 							offset : true,
 							ticks: {
 								autoSkip: true,
@@ -206,25 +208,7 @@
 								color: 'black',
 								maxRotation: 0,
                     			minRotation: 0,
-								//beginAtZero: true ,
-								/*callback: function(value, index, values) {
-									// check if the label value is "00"
-									if (value === 0) {
-										// store the x-axis coordinate of the label position
-										var xPos = this.getPixelForTick(index);
-										// draw a vertical line at the label position
-										this.chartInstance.chart.ctx.beginPath();
-										this.chartInstance.chart.ctx.moveTo(xPos, 0);
-										this.chartInstance.chart.ctx.lineTo(xPos, this.chartInstance.chart.height);
-										this.chartInstance.chart.ctx.strokeStyle = 'black';
-										this.chartInstance.chart.ctx.stroke();
-									}
-									else{
-										return 0;
-
-									}
-									return value;
-								},*/
+								
 							},
 							drowBorder: false,
 							//type: 'timeseries',
@@ -240,7 +224,22 @@
 								display: true,
 							},
 						},
-						  y: {
+						x2 :{
+							labels:['Fri 17-Feb' , 'Fri 18-Feb' , 'Fri 19-Feb' , 'Fri 20-Feb' , 'Fri 21-Feb', 'Fri 22-Feb', 'Fri 23-Feb'
+							, 'Fri 24-Feb', 'Fri 25-Feb', 'Fri 26-Feb'],
+							ticks: {
+								color: 'black',
+								position: 'left',	
+							},
+							plugins : {
+								legend:{
+									textAlign : 'left'
+								}
+								
+							},
+
+						},
+						y: {
 							offset : true,
 							drowBorder: false,
 							ticks: { color: 'black', beginAtZero: true }, //change number of color
@@ -344,8 +343,8 @@
 						fillColor : 'blue',
 					//	yAxisID : 'V5',
 						data: [{% for data in v5 %} "{{data}}", {% endfor %}],
-						borderColor : 'rgb(255, 87, 51)',
-						//backgroundColor : 'rgb(255, 173, 126)',
+						borderColor : 'rgb(187,0,0)',
+						//backgroundColor : 'rgb(249,69,69)',
 					}]
 				},
 				options: {
