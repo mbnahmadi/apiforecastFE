@@ -7,7 +7,12 @@
 {% comment %} ["00","06","12","18","00","06","12","18","00","06","12","18","00","06","12","18","00","06","12","18"] {% endcomment %}
 
 <body>
-	<p>{{newtime}}</p>
+	{% comment %} <div>
+		{%for date in dates%}
+		{{date}},
+		{% endfor %}
+
+	</div> {% endcomment %}
 	<div class="container col-12">
 		<table class="table table-striped shadow p-3 mb-5 bg-white rounded" , style="margin-top:50px;">
 			<thead class=" table-dark">
@@ -222,22 +227,22 @@
 								//color : "red",
 								color: 'black',
 								display: true,
-							},
-						},
-						x2 :{
-							labels:['Fri 17-Feb' , 'Fri 18-Feb' , 'Fri 19-Feb' , 'Fri 20-Feb' , 'Fri 21-Feb', 'Fri 22-Feb', 'Fri 23-Feb'
-							, 'Fri 24-Feb', 'Fri 25-Feb', 'Fri 26-Feb'],
-							ticks: {
-								color: 'black',
-								position: 'left',	
-							},
-							plugins : {
-								legend:{
-									textAlign : 'left'
-								}
 								
 							},
-
+						},
+						x2 :{	
+							labels:[null,{%for date in dates%} "{{date}}",null ,{% endfor %} ],
+							ticks: {
+								color: 'black',	
+								font: {
+									size: 12,
+								}
+                    			//position: 'left',
+							},
+							gridLines: {
+								//offsetGridLines: true
+							}
+					
 						},
 						y: {
 							offset : true,
@@ -284,59 +289,10 @@
 	<div class="container col-12 border rounded shadow-none p-3 mb-5 bg-light rounded" , style="margin-top: 65px; ">	
 		<canvas id="chart2" width=700px height=190px ></canvas>
 		<script>
-			const datehighlighter2 = {
-				id : "datehighlighter2",
-				beforeDatasetsDraw(chart , args , plugins , options) {
-					const { ctx , chartArea : {top , bottom , left , right , width , height},  scales : {x , y} } = chart;
-					//for (let i = 0 ; i < 242 ; i++){
-						//var ctx = chart.ctx;
-						//var xaxis = chart.scales['x'];
-						//var yaxis = chart.scales['y'];
-						//1
-						
-						ctx.fillStyle = 'rgba(211, 211, 211,0.8)';
-						ctx.fillRect(x.left+3, y.top, x.width/10, y.height);
-						//2
-						ctx.fillStyle = 'rgba(255, 255, 224,0.8)';
-						ctx.fillRect(x.left+3 + x.width/10, y.top, x.width/10, y.height);
-						//3
-						ctx.fillStyle = 'rgba(211, 211, 211,0.8)';
-						ctx.fillRect(x.left+2 + x.width/5, y.top, x.width/10, y.height);
-						//4
-						ctx.fillStyle = 'rgba(255, 255, 224,0.8)';
-						ctx.fillRect(x.left+1 + 3*x.width/10, y.top, x.width/10, y.height);
-						//5
-						ctx.fillStyle = 'rgba(211, 211, 211,0.8)';
-						ctx.fillRect(x.left+2 + 4*x.width/10, y.top, x.width/10, y.height);
-						//6
-						ctx.fillStyle = 'rgba(255, 255, 224,0.8)';
-						ctx.fillRect(x.left+2 + 5*x.width/10, y.top, x.width/10, y.height);
-						//7
-						ctx.fillStyle = 'rgba(211, 211, 211,0.8)';
-						ctx.fillRect(x.left+2 + 6*x.width/10, y.top, x.width/10, y.height);
-						//8
-						ctx.fillStyle = 'rgba(255, 255, 224,0.8)';
-						ctx.fillRect(x.left+2 + 7*x.width/10, y.top, x.width/10, y.height);
-						//9
-						ctx.fillStyle = 'rgba(211, 211, 211,0.8)';
-						ctx.fillRect(x.left+2 + 8*x.width/10, y.top, x.width/10, y.height);
-						//10
-						ctx.fillStyle = 'rgba(255, 255, 224,0.8)';
-						ctx.fillRect(x.left+2 + 9*x.width/10, y.top, x.width/10, y.height);
-						ctx.save();
-						ctx.strokeStyle = "black";
-						ctx.lineWidth = 3;
-						//ctx.setLineDash(options.borderDash || []);
-						//ctx.lineDashOffset = options.borderDashOffset;
-						ctx.strokeRect(left, top, width, height);
-						ctx.restore();
-				}
-				}
 			const ssx = document.getElementById('chart2').getContext('2d');
 			const chart2 = new Chart(ssx, {
 				type: 'line',
 				data: {
-					labels: [{%for time in times%}"{{time}}",{% endfor %}],
 					datasets: [{
 						label: 'Direction',
 						fill : false,
@@ -361,6 +317,7 @@
 					//delay : 100,				
 					scales: {
 						x: {
+							labels:[{%for time in times%}"{{time}}",{% endfor %}],
 							offset : true,
 							ticks: {
 								autoSkip: true,
@@ -383,6 +340,16 @@
 								display: true,
 							}
 						  }, 
+						  x2 :{	
+							labels:[null,{%for date in dates%} "{{date}}",null ,{% endfor %} ],
+							ticks: {
+								color: 'black',	
+								font: {
+									size: 12,
+								}
+                    			//position: 'left',
+							},
+						},
 						y: {
 							offset : true,
 							drowBorder: false,
@@ -445,7 +412,7 @@
 							}
 						},
 					},
-					plugins : [datehighlighter2]
+					plugins : [datehighlighter]
 				});
 		</script>
 	</div>

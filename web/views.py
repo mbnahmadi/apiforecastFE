@@ -68,14 +68,20 @@ def TableView(request, name):
     
     list_name = r[-1]  
     list_name=list_name.values()
-
+    date_list = []
     
     for i in list_name:
         # print (i)
         fpath = pathlib.Path(i)
         j = fpath.stem
         j=j[0:8] 
-    newtime = datetime.datetime.strptime(j, '%Y%m%d').strftime('%a %d-%b')
+    date = datetime.datetime.strptime(j, '%Y%m%d')
+    formatted_date = date.strftime("%a %d-%b")
+    for i in range(10):
+        date += datetime.timedelta(days=1)
+        formatted_date = date.strftime("%a %d-%b")
+        date_list.append(formatted_date)
+    
    
     context={
         "api" : r,
@@ -86,7 +92,7 @@ def TableView(request, name):
         # "v7" : list_c ,
         "times" : times,
         # "list_api": lists,
-        "newtime" : newtime,
+        "dates" : date_list,
     }
     return render(request, "table.html", context)
 
